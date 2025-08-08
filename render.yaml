@@ -1,0 +1,94 @@
+services:
+  # EcoVerse Web Application
+  - type: web
+    name: ecoverse-web-app
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd web-app && npm ci && npm run build
+    startCommand: cd web-app && npm start
+    healthCheckPath: /
+    env: node
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false
+    buildFilter:
+      paths:
+        - web-app/**
+        - package.json
+        - README.md
+
+  # Smart Contracts Documentation
+  - type: web
+    name: ecoverse-contracts
+    runtime: static
+    region: oregon
+    plan: free
+    buildCommand: |
+      cd web3-contracts
+      npm ci
+      mkdir -p dist
+      echo '<!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>EcoVerse Smart Contracts</title>
+          <style>
+              body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #0a1929; color: white; }
+              .container { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; }
+              h1 { color: #00E676; } h2 { color: #00B8D4; } code { background: #1a365d; padding: 2px 6px; border-radius: 4px; }
+              .section { margin: 20px 0; } .highlight { background: rgba(0,230,118,0.1); padding: 10px; border-left: 3px solid #00E676; }
+          </style>
+      </head>
+      <body>
+          <div class="container">
+              <h1>🌱 EcoVerse Smart Contracts</h1>
+              <div class="section">
+                  <h2>Overview</h2>
+                  <p>Smart contracts powering the EcoVerse sustainability platform with blockchain rewards and NFT achievements.</p>
+              </div>
+              <div class="section">
+                  <h2>📄 Contracts</h2>
+                  <div class="highlight">
+                      <h3>GreenToken (GTN)</h3>
+                      <p><strong>Type:</strong> ERC-20 Token<br>
+                      <strong>Purpose:</strong> Utility token for sustainability rewards<br>
+                      <strong>Max Supply:</strong> 100,000,000 GTN</p>
+                  </div>
+                  <div class="highlight">
+                      <h3>EcoAchievements</h3>
+                      <p><strong>Type:</strong> ERC-721 NFT<br>
+                      <strong>Purpose:</strong> Achievement badges for sustainability milestones<br>
+                      <strong>Categories:</strong> Energy, Water, Waste, Challenges</p>
+                  </div>
+              </div>
+              <div class="section">
+                  <h2>🚀 Deployment</h2>
+                  <p>Deploy to Polygon Mumbai testnet:</p>
+                  <code>npm run deploy-mumbai</code>
+              </div>
+              <div class="section">
+                  <h2>🔗 Links</h2>
+                  <p><a href="https://github.com/your-repo/ecoverse" style="color: #00E676;">GitHub Repository</a></p>
+                  <p><a href="https://ecoverse-web-app.onrender.com" style="color: #00B8D4;">Live Web App</a></p>
+              </div>
+          </div>
+      </body>
+      </html>' > dist/index.html
+    staticPublishPath: web3-contracts/dist
+    buildFilter:
+      paths:
+        - web3-contracts/**
