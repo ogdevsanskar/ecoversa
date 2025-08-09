@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from './theme'
-import Layout from './components/layout/Layout'
+// Ensure the Layout component exists at the specified path.
+// If the file is named differently or located elsewhere, update the import path accordingly.
+import Layout from './components/layout/Layout';
 import {
   HomePage,
   Dashboard,
