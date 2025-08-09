@@ -109,7 +109,7 @@ Click **"Advanced"** → **Environment Variables** → Add each variable:
 | `VITE_AI_API_URL` | `https://ecoversa-ai-api.onrender.com` |
 | `VITE_IOT_API_URL` | `https://ecoversa-iot-simulator.onrender.com` |
 | `VITE_APP_TITLE` | `EcoVerse` |
-| `VITE_ENVIRONMENT` | `production` |` |
+| `VITE_ENVIRONMENT` | `production` |
 
 ### 2.4 Deploy Frontend
 
