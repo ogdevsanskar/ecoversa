@@ -66,6 +66,27 @@ def load_sample_data():
     ml_models_trained = True
     print("✅ ML models trained successfully!")
 
+@app.route('/', methods=['GET'])
+def root():
+    """Root endpoint with API information"""
+    return jsonify({
+        'service': 'EcoVerse AI/ML Analytics API',
+        'status': 'running',
+        'version': '1.0.0',
+        'description': 'AI-powered sustainability analytics for smart campus management',
+        'endpoints': {
+            'health': '/api/health',
+            'predictions': '/api/predict/<metric>',
+            'anomaly_detection': '/api/anomaly/check',
+            'sustainability_insights': '/api/insights',
+            'carbon_footprint': '/api/carbon-footprint',
+            'suggestions': '/api/suggestions',
+            'status': '/api/status',
+            'demo': '/api/demo/simulate'
+        },
+        'documentation': '/api/status'
+    })
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
