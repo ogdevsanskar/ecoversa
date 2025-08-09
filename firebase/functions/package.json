@@ -1,0 +1,50 @@
+{
+  "name": "ecoversa-functions",
+  "description": "EcoVerse Cloud Functions for IoT data processing, rewards, and analytics",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "build": "npm run lint",
+    "test": "jest",
+    "dev": "nodemon index.js"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^4.5.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "node-cron": "^3.0.2",
+    "web3": "^4.2.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.1",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  },
+  "private": true,
+  "keywords": [
+    "firebase",
+    "functions",
+    "sustainability",
+    "iot",
+    "blockchain",
+    "ai",
+    "ml"
+  ],
+  "author": "EcoVerse Team",
+  "license": "MIT"
+}

@@ -1,0 +1,61 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // User profile images - users can upload their own
+    match /profile-images/{userId}/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId
+        && resource.size < 5 * 1024 * 1024 // Max 5MB
+        && resource.contentType.matches('image/.*');
+    }
+    
+    // Achievement images - read for all, write for admins
+    match /achievement-images/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        (request.auth.token.admin == true || request.auth.token.role == 'admin')
+        && resource.size < 10 * 1024 * 1024; // Max 10MB
+    }
+    
+    // Campus images - read for all, write for admins
+    match /campus-images/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        (request.auth.token.admin == true || request.auth.token.role == 'admin')
+        && resource.size < 20 * 1024 * 1024; // Max 20MB
+    }
+    
+    // User action proofs - users can upload their own proof images
+    match /action-proofs/{userId}/{allPaths=**} {
+      allow read: if request.auth != null && 
+        (request.auth.uid == userId || 
+         request.auth.token.admin == true || 
+         request.auth.token.role == 'admin');
+      allow write: if request.auth != null && request.auth.uid == userId
+        && resource.size < 10 * 1024 * 1024 // Max 10MB
+        && resource.contentType.matches('image/.*');
+    }
+    
+    // NFT metadata and images - read for all, write for system
+    match /nft-assets/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        (request.auth.token.system == true || request.auth.token.role == 'system');
+    }
+    
+    // Documents and reports - read for authenticated users
+    match /documents/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        (request.auth.token.admin == true || request.auth.token.role == 'admin')
+        && resource.size < 50 * 1024 * 1024; // Max 50MB
+    }
+    
+    // Public assets - read for everyone
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        (request.auth.token.admin == true || request.auth.token.role == 'admin');
+    }
+  }
+}

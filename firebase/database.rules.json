@@ -1,0 +1,67 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "campus-data": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.admin === true || auth.token.role === 'admin')"
+    },
+    "sensor-data": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.system === true || auth.token.role === 'system')",
+      ".indexOn": ["timestamp", "building", "metric_type"]
+    },
+    "live-metrics": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.system === true || auth.token.role === 'system')",
+      "current": {
+        ".indexOn": ["last_updated"]
+      }
+    },
+    "achievements": {
+      "$uid": {
+        ".read": "$uid === auth.uid || (auth != null && auth.token.admin === true)",
+        ".write": "auth != null && (auth.token.system === true || auth.token.role === 'system')"
+      }
+    },
+    "leaderboard": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.admin === true || auth.token.role === 'admin')",
+      ".indexOn": ["score", "category"]
+    },
+    "ai-suggestions": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.system === true || auth.token.role === 'system')",
+      ".indexOn": ["priority", "created_at"]
+    },
+    "user-actions": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        ".indexOn": ["date", "action_type", "carbon_saved"]
+      }
+    },
+    "public-metrics": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.admin === true || auth.token.role === 'admin')"
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "auth != null && (auth.token.system === true || auth.token.role === 'system')"
+      }
+    },
+    "campus-buildings": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.admin === true || auth.token.role === 'admin')"
+    },
+    "sustainability-goals": {
+      ".read": "auth != null",
+      ".write": "auth != null && (auth.token.admin === true || auth.token.role === 'admin')"
+    }
+  }
+}
