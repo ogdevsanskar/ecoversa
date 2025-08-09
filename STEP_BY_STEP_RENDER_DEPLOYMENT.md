@@ -2,6 +2,23 @@
 
 This guide will walk you through deploying the complete EcoVerse platform to Render with all 3 services.
 
+## ✅ Current Deployment Status
+
+**Successfully Deployed Services:**
+- ✅ **AI/ML Analytics API**: Live at `https://ecoverse-ai-api.onrender.com`
+  - Root endpoint fixed with comprehensive API documentation
+  - Health check: `/api/health`
+  - Prediction endpoints operational
+- 🔄 **IoT Simulation API**: Ready for deployment with Flask wrapper
+  - New Flask API created with comprehensive endpoints
+  - Health check: `/api/health`
+  - Simulation control: `/api/simulation/start`, `/api/simulation/stop`
+
+**Next Steps:**
+1. Deploy IoT Simulation service to Render
+2. Deploy Frontend to Render
+3. Update environment variables for service integration
+
 ## 📋 Prerequisites Checklist
 
 Before starting, ensure you have:
@@ -83,16 +100,16 @@ Click **"Advanced"** → **Environment Variables** → Add each variable:
 
 | Key | Value (Replace with your Firebase values) |
 |-----|-------------------------------------------|
-| `VITE_FIREBASE_API_KEY` | `AIzaSyC...` (from Firebase config) |
+| `VITE_FIREBASE_API_KEY` | `Get from Firebase Console → Project Settings → General → Web apps → Config` |
 | `VITE_FIREBASE_AUTH_DOMAIN` | `ecoversa-production.firebaseapp.com` |
 | `VITE_FIREBASE_PROJECT_ID` | `ecoversa-production` |
 | `VITE_FIREBASE_STORAGE_BUCKET` | `ecoversa-production.appspot.com` |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `123456789` (from Firebase config) |
-| `VITE_FIREBASE_APP_ID` | `1:123456789:web:abc123` (from Firebase config) |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `Get from Firebase Console config` |
+| `VITE_FIREBASE_APP_ID` | `Get from Firebase Console config` |
 | `VITE_AI_API_URL` | `https://ecoversa-ai-api.onrender.com` |
 | `VITE_IOT_API_URL` | `https://ecoversa-iot-simulator.onrender.com` |
 | `VITE_APP_TITLE` | `EcoVerse` |
-| `VITE_ENVIRONMENT` | `production` |
+| `VITE_ENVIRONMENT` | `production` |` |
 
 ### 2.4 Deploy Frontend
 
@@ -157,7 +174,7 @@ Click **"Advanced"** → **Environment Variables**:
 - **Branch**: `main`
 - **Root Directory**: (leave blank)
 - **Build Command**: `pip install -r iot-simulation/requirements.txt`
-- **Start Command**: `cd iot-simulation && python campus_simulator.py`
+- **Start Command**: `cd iot-simulation && python app.py`
 
 **Plan Settings:**
 - **Instance Type**: **Starter**
@@ -169,11 +186,12 @@ Click **"Advanced"** → **Environment Variables**:
 
 | Key | Value |
 |-----|-------|
-| `SIMULATION_MODE` | `production` |
-| `PORT` | `8000` |
+| `FLASK_ENV` | `production` |
+| `FLASK_APP` | `app.py` |
+| `PORT` | `5000` |
 | `FIREBASE_URL` | `https://ecoversa-production-default-rtdb.firebaseio.com` |
 | `FIREBASE_PROJECT_ID` | `ecoversa-production` |
-| `SIMULATION_INTERVAL` | `60` |
+| `SIMULATION_INTERVAL` | `300` |
 | `CAMPUS_BUILDINGS` | `7` |
 
 ### 4.4 Deploy IoT Simulator
@@ -215,8 +233,9 @@ Click **"Advanced"** → **Environment Variables**:
 2. Should return JSON: `{"status": "healthy"}`
 
 **Test IoT Simulator:**
-1. Visit: `https://ecoversa-iot-simulator.onrender.com/status`
-2. Should return simulation status
+1. Visit: `https://ecoversa-iot-simulator.onrender.com/api/health`
+2. Should return JSON: `{"status": "healthy"}`
+3. Visit: `https://ecoversa-iot-simulator.onrender.com/` for API documentation
 
 ### 6.2 Test Integration
 
