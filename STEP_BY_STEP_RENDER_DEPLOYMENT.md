@@ -16,7 +16,7 @@ This guide will walk you through deploying the complete EcoVerse platform to Ren
 
 **Next Steps:**
 1. Deploy IoT Simulation service to Render
-2. Deploy Frontend to Render
+2. Deploy Frontend to Vercel (Recommended) or Render
 3. Update environment variables for service integration
 
 ## 📋 Prerequisites Checklist
@@ -74,7 +74,48 @@ const firebaseConfig = {
 };
 ```
 
-## 🚀 Step 2: Deploy Service 1 - Frontend (Static Site)
+## 🚀 Step 2: Deploy Frontend to Vercel (Recommended)
+
+> **🌟 Recommended**: Vercel is optimized for React/Vite applications with automatic deployments, global CDN, and superior performance. See `VERCEL_DEPLOYMENT_GUIDE.md` for detailed instructions.
+
+### 2.1 Quick Vercel Deployment
+
+1. **Go to [Vercel Dashboard](https://vercel.com/dashboard)**
+2. **Click "New Project"** → **Import from GitHub**
+3. **Select Repository**: `ogdevsanskar/ecoversa`
+4. **Configure**:
+   - **Project Name**: `ecoversa-frontend`
+   - **Framework**: `Vite`
+   - **Root Directory**: `web-app`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+
+### 2.2 Add Environment Variables in Vercel
+
+Go to Project Settings → Environment Variables:
+
+| Key | Value |
+|-----|-------|
+| `VITE_FIREBASE_API_KEY` | `Get from Firebase Console` |
+| `VITE_FIREBASE_AUTH_DOMAIN` | `ecoversa-production.firebaseapp.com` |
+| `VITE_FIREBASE_PROJECT_ID` | `ecoversa-production` |
+| `VITE_FIREBASE_STORAGE_BUCKET` | `ecoversa-production.appspot.com` |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `Get from Firebase Console` |
+| `VITE_FIREBASE_APP_ID` | `Get from Firebase Console` |
+| `VITE_AI_API_URL` | `https://ecoverse-ai-api.onrender.com` |
+| `VITE_IOT_API_URL` | `https://ecoversa-iot-simulator.onrender.com` |
+| `VITE_APP_TITLE` | `EcoVerse` |
+| `VITE_ENVIRONMENT` | `production` |
+
+### 2.3 Deploy
+
+1. **Click "Deploy"**
+2. **Wait for deployment** (1-2 minutes)
+3. **Your app will be live** at `https://ecoversa-frontend.vercel.app`
+
+---
+
+## 🚀 Alternative: Deploy Frontend to Render
 
 ### 2.1 Create Frontend Service
 
@@ -319,9 +360,11 @@ Click **"Advanced"** → **Environment Variables**:
 
 After successful deployment, your services will be available at:
 
-- **🌐 Frontend**: `https://ecoversa-web-app.onrender.com`
-- **🤖 AI/ML API**: `https://ecoversa-ai-api.onrender.com`
+- **🌐 Frontend (Vercel)**: `https://ecoversa-frontend.vercel.app`
+- **🤖 AI/ML API**: `https://ecoverse-ai-api.onrender.com`
 - **🏢 IoT Simulator**: `https://ecoversa-iot-simulator.onrender.com`
+
+> **Note**: Replace with your actual Vercel domain if using custom domain
 
 ## 🔄 Automatic Deployments
 
