@@ -1,4 +1,5 @@
 services:
+  # Frontend Web Application
   - type: web
     name: ecoversa-web-app
     runtime: static
@@ -16,3 +17,33 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+
+  # AI/ML Analytics Backend API
+  - type: web
+    name: ecoversa-ai-api
+    runtime: python3
+    buildCommand: pip install -r ai-analytics/requirements.txt
+    startCommand: cd ai-analytics && python simple_api_server.py
+    plan: starter
+    autoDeploy: false
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: simple_api_server.py
+      - key: PORT
+        value: 5000
+
+  # IoT Data Simulation Service
+  - type: web
+    name: ecoversa-iot-simulator
+    runtime: python3
+    buildCommand: pip install -r iot-simulation/requirements.txt
+    startCommand: cd iot-simulation && python campus_simulator.py
+    plan: starter
+    autoDeploy: false
+    envVars:
+      - key: SIMULATION_MODE
+        value: production
+      - key: PORT
+        value: 8000

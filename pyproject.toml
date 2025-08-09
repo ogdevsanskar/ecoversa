@@ -1,0 +1,10 @@
+[tool.pyright]
+include = ["ai-analytics", "iot-simulation", "web3-contracts"]
+extraPaths = ["ai-analytics", "iot-simulation", "web3-contracts"]
+pythonVersion = "3.13"
+pythonPlatform = "Windows"
+
+[tool.pylsp-mypy]
+enabled = true
+live_mode = true
+strict = false
