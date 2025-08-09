@@ -116,7 +116,9 @@ Go to Project Settings → Environment Variables:
 
 ---
 
-## 🚀 Alternative: Deploy Frontend to Render
+## 🚀 Alternative: Deploy Frontend to Render (Fixed for White Screen)
+
+> **⚠️ Important**: Recent fixes applied to resolve white screen issues on Render static hosting.
 
 ### 2.1 Create Frontend Service
 
@@ -127,7 +129,7 @@ Go to Project Settings → Environment Variables:
    - Select repository: **`ogdevsanskar/ecoversa`**
    - Click **"Connect"**
 
-### 2.2 Configure Frontend Service
+### 2.2 Configure Frontend Service (Updated Settings)
 
 **Basic Settings:**
 - **Name**: `ecoversa-web-app`
@@ -135,6 +137,9 @@ Go to Project Settings → Environment Variables:
 - **Root Directory**: (leave blank)
 - **Build Command**: `./build.sh`
 - **Publish Directory**: `web-app/dist`
+- **Auto-Deploy**: `Yes`
+
+**⚠️ Critical**: Ensure these settings match exactly to avoid white screen issues.
 
 ### 2.3 Add Frontend Environment Variables
 
@@ -320,6 +325,20 @@ Click **"Advanced"** → **Environment Variables**:
 1. Check **Build Logs** in Render dashboard
 2. Verify all `VITE_` environment variables are set
 3. Ensure `build.sh` file exists and is executable
+
+**Frontend Shows White Screen (FIXED):**
+1. **Check Console Logs**: Open browser Developer Tools → Console
+2. **Look for errors**: JavaScript errors, 404s for assets, or Firebase config issues
+3. **Debug info**: The app now logs startup information and errors
+4. **Asset loading**: Fixed base path issues in vite.config.ts (changed from './' to '/')
+5. **SPA routing**: _redirects file automatically created for proper routing
+6. **Environment variables**: Check if Firebase config variables are set correctly
+
+**If White Screen Persists:**
+1. Check if Firebase environment variables are set correctly in Render
+2. Verify the build command uses `./build.sh` and publish directory is `web-app/dist`
+3. Look for error messages in browser console (app now shows detailed error information)
+4. Try redeploying from Render dashboard
 
 **Python Service Build Fails:**
 1. Check **Build Logs**
