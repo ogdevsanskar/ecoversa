@@ -22,12 +22,26 @@ This guide explains how to deploy the Ecoversa web application to Render.
 **Build Command:** `./build.sh`
 **Publish Directory:** `web-app/dist`
 
-### 3. Environment Variables (if needed)
+### 3. Environment Variables (Required)
 
-If you have any environment variables (like Firebase config), add them in the Render dashboard:
-- Go to your service settings
-- Navigate to "Environment"
-- Add your variables
+Your app uses Firebase, so you **must** set up environment variables:
+
+1. Go to your Render service dashboard
+2. Navigate to "Environment" tab
+3. Add these variables with your Firebase config values:
+
+| Variable | Example |
+|----------|---------|
+| `VITE_FIREBASE_API_KEY` | `AIzaSyC...` |
+| `VITE_FIREBASE_AUTH_DOMAIN` | `ecoversa.firebaseapp.com` |
+| `VITE_FIREBASE_PROJECT_ID` | `ecoversa-prod` |
+| `VITE_FIREBASE_STORAGE_BUCKET` | `ecoversa-prod.appspot.com` |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `123456789` |
+| `VITE_FIREBASE_APP_ID` | `1:123456789:web:abc123` |
+
+**📋 Get Firebase values from:** [Firebase Console](https://console.firebase.google.com/) → Project Settings → General → Your apps
+
+**📖 Detailed setup guide:** See `ENVIRONMENT.md`
 
 ### 4. Deploy
 
