@@ -85,10 +85,11 @@ const firebaseConfig = {
 3. **Select Repository**: `ogdevsanskar/ecoversa`
 4. **Configure**:
    - **Project Name**: `ecoversa-frontend`
-   - **Framework**: `Vite`
-   - **Root Directory**: `web-app`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+   - **Framework**: `Other` (don't select Vite)
+   - **Root Directory**: `.` (keep as root directory)
+   - **Build Command**: Leave empty (uses vercel.json)
+   - **Output Directory**: Leave empty (uses vercel.json)
+   - **Install Command**: Leave empty (uses vercel.json)
 
 ### 2.2 Add Environment Variables in Vercel
 

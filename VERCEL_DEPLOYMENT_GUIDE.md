@@ -22,7 +22,20 @@ git push origin main
 
 ### Step 2: Deploy to Vercel
 
-#### Option A: Vercel CLI (Recommended)
+#### Option A: Vercel Dashboard (Recommended)
+
+1. **Go to [Vercel Dashboard](https://vercel.com/dashboard)**
+2. **Click "New Project"**
+3. **Import from GitHub**: Select `ogdevsanskar/ecoversa`
+4. **Configure Project**:
+   - **Project Name**: `ecoversa-frontend`
+   - **Framework Preset**: `Other`
+   - **Root Directory**: `.` (leave as root)
+   - **Build Command**: Leave empty (uses vercel.json config)
+   - **Output Directory**: Leave empty (uses vercel.json config)
+   - **Install Command**: Leave empty (uses vercel.json config)
+
+#### Option B: Vercel CLI (Alternative)
 
 1. **Install Vercel CLI**:
    ```bash
@@ -34,9 +47,9 @@ git push origin main
    vercel login
    ```
 
-3. **Deploy from web-app directory**:
+3. **Deploy from project root**:
    ```bash
-   cd web-app
+   cd /path/to/ecoversa-main
    vercel --prod
    ```
 
@@ -45,20 +58,7 @@ git push origin main
    - Which scope? **Your personal account**
    - Link to existing project? **N**
    - Project name? **ecoversa-frontend**
-   - Directory? **./web-app**
-
-#### Option B: Vercel Dashboard (Easy)
-
-1. **Go to [Vercel Dashboard](https://vercel.com/dashboard)**
-2. **Click "New Project"**
-3. **Import from GitHub**: Select `ogdevsanskar/ecoversa`
-4. **Configure Project**:
-   - **Project Name**: `ecoversa-frontend`
-   - **Framework Preset**: `Vite`
-   - **Root Directory**: `web-app`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
+   - Directory? **.**
 
 ### Step 3: Configure Environment Variables
 
