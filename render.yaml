@@ -6,7 +6,7 @@ services:
     region: oregon
     plan: free
     buildCommand: cd web-app && npm ci && npm run build
-    startCommand: cd web-app && npm start
+  startCommand: cd web-app && npm run preview
     healthCheckPath: /
     env: node
     envVars:

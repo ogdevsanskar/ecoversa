@@ -1,124 +1,142 @@
-import { Box, Container, Flex, HStack, Text, Button, VStack } from '@chakra-ui/react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { FaLeaf, FaBars } from 'react-icons/fa'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  Container,
+  Link,
+  Stack,
+} from '@chakra-ui/react'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { FaLeaf, FaBars, FaTimes } from 'react-icons/fa'
 
-const MotionBox = motion(Box)
-
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'Dashboard', path: '/dashboard' },
-  { name: 'Analytics', path: '/analytics' },
-  { name: 'Challenges', path: '/challenges' },
-  { name: 'Leaderboard', path: '/leaderboard' },
-  { name: 'Rewards', path: '/rewards' },
-  { name: 'Profile', path: '/profile' },
-]
-
-export default function Navigation() {
-  const navigate = useNavigate()
-  const location = useLocation()
+const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Analytics', path: '/analytics' },
+    { name: 'Challenges', path: '/challenges' },
+    { name: 'Leaderboard', path: '/leaderboard' },
+    { name: 'Rewards', path: '/rewards' },
+    { name: 'Profile', path: '/profile' },
+  ]
+
+  const NavLink = ({ children, to, ...props }: any) => {
+    const isActive = location.pathname === to
+    return (
+      <Link
+        as={RouterLink}
+        to={to}
+        px={3}
+        py={2}
+        rounded="md"
+        color={isActive ? 'green.500' : 'gray.700'}
+        fontWeight={isActive ? 'semibold' : 'normal'}
+        _hover={{
+          textDecoration: 'none',
+          color: 'green.500',
+          bg: 'green.50'
+        }}
+        {...props}
+      >
+        {children}
+      </Link>
+    )
+  }
 
   return (
-    <Box
-      as="nav"
-      bg="rgba(255, 255, 255, 0.1)"
-      backdropFilter="blur(20px)"
-      borderBottom="1px solid rgba(255, 255, 255, 0.1)"
-      position="sticky"
-      top={0}
-      zIndex={10}
-    >
-      <Container maxW="container.xl">
-        <Flex align="center" justify="space-between" py={4}>
-          {/* Logo */}
-          <Flex align="center" gap={2} cursor="pointer" onClick={() => navigate('/')}>
-            <MotionBox
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
-              <FaLeaf color="#00E676" size="28px" />
-            </MotionBox>
-            <Text
-              fontSize="2xl"
-              fontWeight="bold"
-              bgGradient="linear(to-r, #00E676, #00B8D4)"
-              bgClip="text"
-              fontFamily="Poppins"
-            >
-              EcoVerse
-            </Text>
-          </Flex>
+    <>
+      <Box bg="white" px={4} shadow="md" borderBottom="1px" borderColor="gray.200">
+        <Container maxW="7xl">
+          <Flex h={16} alignItems="center" justifyContent="space-between">
+            {/* Logo */}
+            <Flex alignItems="center" gap={3}>
+              <Box color="green.500">
+                <FaLeaf size="28" />
+              </Box>
+              <Text fontWeight="bold" fontSize="2xl" color="green.600">
+                EcoVerse
+              </Text>
+            </Flex>
 
-          {/* Desktop Navigation */}
-          <HStack gap={8} display={{ base: 'none', md: 'flex' }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                variant="ghost"
-                color={location.pathname === item.path ? '#00E676' : 'rgba(255, 255, 255, 0.8)'}
-                fontWeight={location.pathname === item.path ? 'bold' : 'normal'}
-                _hover={{
-                  color: '#00E676',
-                  bg: 'rgba(0, 230, 118, 0.1)',
-                }}
-                onClick={() => navigate(item.path)}
-                transition="all 0.2s"
-              >
-                {item.name}
+            {/* Desktop Navigation */}
+            <Stack 
+              as="nav" 
+              direction="row" 
+              gap={1} 
+              display={{ base: 'none', md: 'flex' }}
+            >
+              {navItems.map((item) => (
+                <NavLink key={item.path} to={item.path}>
+                  {item.name}
+                </NavLink>
+              ))}
+            </Stack>
+
+            {/* Desktop CTA */}
+            <Stack 
+              direction="row" 
+              gap={4} 
+              display={{ base: 'none', md: 'flex' }}
+            >
+              <Button colorScheme="green" size="sm" rounded="full">
+                Connect Wallet
               </Button>
-            ))}
-          </HStack>
+            </Stack>
 
-          {/* Mobile Menu Toggle */}
-          <Button
-            display={{ base: 'flex', md: 'none' }}
-            variant="ghost"
-            color="white"
-            onClick={() => setIsOpen(!isOpen)}
-            p={0}
-            minW="auto"
-          >
-            <FaBars />
-          </Button>
-        </Flex>
+            {/* Mobile menu button */}
+            <Button
+              display={{ md: 'none' }}
+              onClick={() => setIsOpen(!isOpen)}
+              variant="ghost"
+              p={2}
+            >
+              {isOpen ? <FaTimes size="20" /> : <FaBars size="20" />}
+            </Button>
+          </Flex>
+        </Container>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <MotionBox
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+          <Box
             display={{ base: 'block', md: 'none' }}
             pb={4}
+            px={4}
+            bg="white"
+            borderTop="1px"
+            borderColor="gray.200"
           >
-            <VStack gap={4} align="start">
+            <Stack gap={2} mt={4}>
               {navItems.map((item) => (
-                <Button
-                  key={item.path}
-                  variant="ghost"
-                  color={location.pathname === item.path ? '#00E676' : 'rgba(255, 255, 255, 0.8)'}
-                  fontWeight={location.pathname === item.path ? 'bold' : 'normal'}
-                  _hover={{
-                    color: '#00E676',
-                    bg: 'rgba(0, 230, 118, 0.1)',
-                  }}
-                  onClick={() => {
-                    navigate(item.path)
-                    setIsOpen(false)
-                  }}
-                  justifyContent="flex-start"
-                  w="100%"
+                <NavLink 
+                  key={item.path} 
+                  to={item.path} 
+                  onClick={() => setIsOpen(false)}
+                  w="full"
+                  display="block"
                 >
                   {item.name}
-                </Button>
+                </NavLink>
               ))}
-            </VStack>
-          </MotionBox>
+              <Button 
+                colorScheme="green" 
+                size="sm" 
+                mt={4} 
+                rounded="full"
+                w="full"
+              >
+                Connect Wallet
+              </Button>
+            </Stack>
+          </Box>
         )}
-      </Container>
-    </Box>
+      </Box>
+    </>
   )
 }
+
+export default Navigation
